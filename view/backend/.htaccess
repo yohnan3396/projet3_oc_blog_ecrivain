@@ -1,0 +1,4 @@
+AuthName "Page d'administration protégée, veuillez vous identifier"
+AuthType Basic
+AuthUserFile "/homepages/36/d608730124/htdocs/yohann-kipfer.com/projets_OC/projet_3/view/backend/.htpasswd"
+Require valid-user

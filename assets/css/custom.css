@@ -1,0 +1,66 @@
+   select.form-control:not([size]):not([multiple]) {
+     height: auto !important; 
+}
+
+.li-youtube
+{
+cursor:pointer;	
+}
+.li-youtube:hover
+{
+cursor:pointer;	
+color: #FF0000;
+animation-timing-function: linear;
+ animation-duration: 4s;
+}
+
+
+#uploadImage .modal-dialog {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#uploadImage .modal-content {
+  height: auto;
+  min-height: 100%;
+  border-radius: 0;
+}
+
+.modal-content {
+    max-height: calc(100vh - 50px);
+    overflow-y: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.image-box .image
+{
+  background:transparent !important;
+}
+
+
+
+.page-title
+{
+  padding-top: 34px;
+}
