@@ -3,6 +3,37 @@
 foreach($articlesTotal as $article):?>
 
 
+<!-- Modal / Demo -->
+<DIV class="modal fade" id="signalerLeCommentaire" role="dialog">
+    <DIV class="modal-dialog" role="document">
+        <DIV class="modal-content">
+            <DIV class="modal-header">
+                <BUTTON type="button" class="close" data-dismiss="modal" aria-label="Close"><I class="ti-close"></I></BUTTON>
+                <H4 class="modal-title" id="myModalLabel">Signaler le commentaire </H4>
+            </DIV>
+            <DIV class="modal-body">
+
+                      <input type="hidden" id="idCommentaireSignalement"> 
+
+                      <DIV class="alert alert-success" id="successSignalement" style="display:none;" role="alert">Le commentaire a bien été signalé.</DIV>
+                      <center><img src="https://leskits.com/assets/img/loader.svg" id="loaderSignalement" style="display:none;"></center>
+
+
+                    <DIV class="alert alert-danger" id="commentaireVerifiee" role="alert" >Ce commentaire sera vérifié prochainement.</DIV>
+
+
+            </DIV>
+            <DIV class="modal-footer">
+                <BUTTON type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</BUTTON>
+                <BUTTON type="button" onclick="submitSignalement()" id="submitSignalement" class="btn btn-primary">Signaler</BUTTON>
+
+            </DIV>
+        </DIV>
+    </DIV>
+</DIV>
+
+
+
     <!-- Section / Blog -->
     <section id="blog" class="section">
 
@@ -39,7 +70,7 @@ foreach($articlesTotal as $article):?>
                                            <span class="details">
                                                 <?php echo $commentaire->getPseudo(); ?> le <?php echo $commentaire->getTemps(); ?> •
 
-                                                 <a href="#" data-toggle="modal" onclick="signalerCommentaire('commentaire', <?php echo $commentaire->getId(); ?>)" data-target="#signalerLeCommentaire" class="text-primary">Signaler le commentaire</a> 
+                                                 <a href="#" data-toggle="modal" onclick="signalerCommentaire(<?php echo $commentaire->getId(); ?>)" data-target="#signalerLeCommentaire" class="text-primary">Signaler le commentaire</a> 
 
                                            </span>  
                                           
@@ -70,15 +101,16 @@ foreach($articlesTotal as $article):?>
                             <center><img src="https://leskits.com/assets/img/loader.svg" id="loaderAjoutCommentaire" style="display:none;"></center>
 
 
-                            <form action="https://leskits.com/ajaxRequest/ajoutCommentaireKit.php" method="post" id="form-ajoutCommentaire" class="validate-form">
-                                 <input type="hidden" value="3" id="idKit" name="idKit">
-                                 <input type="hidden" value="article" id="type" name="type">
+                            <form action="/addComment" method="post" id="form-ajoutCommentaire" class="validate-form">
+                                 <input type="hidden" value="<?php echo $article->getId(); ?>" id="idArticle" name="idArticle">
+
+                                <input type="text"  id="pseudo" name="pseudo" class="form-control" placeholder="Pseudo" required>
 
                                 <div class="form-group">
-                                    <textarea id="commentKit" name="commentKit" cols="30" rows="4" class="form-control" required></textarea>
+                                    <textarea id="commentaire" name="commentaire" cols="30" rows="4" class="form-control" required></textarea>
                                 </div>
 
-                                <button class="btn btn-submit" type="button" onclick="submitCommentaireKit();return false;">Envoyer</button>
+                                <button class="btn btn-submit" type="button" onclick="ajouterCommentaire();return false;">Envoyer</button>
                             </form>
                         </div>
                     </div>

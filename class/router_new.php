@@ -45,27 +45,40 @@ class MyRouter
 
 
             }
-            elseif($page == "requete") {
+            elseif($page == "addComment") {
 
-            if(isset($_POST['req']))
+            if(isset($_POST['idArticle']) AND is_numeric($_POST['idArticle']))
             {
-            
-                $req = $_POST['req']; 
-
-                if($req == "addComment")
-                {
+       
                         
                     $controller = new Controller;
-                    $controller->addComment($_POST);            
+                    $controller->addComment();            
                 
-                
-                }
+            
 
 
             }
 
                        
             }
+            elseif($page == "signalerCommentaire") {
+
+
+            if(isset($_POST['idCommentaireSignalement']) AND is_numeric($_POST['idCommentaireSignalement']))
+            {
+       
+                        
+                    $controller = new Controller;
+                    $controller->signalerCommentaire();            
+                
+            
+
+
+            }
+
+                       
+            }
+
             elseif($page == "blog-admin") {
                 
                $controller = new Controller;

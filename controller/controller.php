@@ -95,15 +95,13 @@ class Controller
 
 
 
-
-
-
-	public function addComment($parameters)
+	public function addComment()
 	{
 
 		$commentManager = new \Blog\Index\Model\commentManager();
-		$commentManager->addComment($parameters);
-        $commentaires = $commentManager->getAll();
+		$response = $commentManager->addComment();
+        
+        echo json_encode(["errorAjoutCommentaire" => $response]);
 
 	}
 
@@ -115,12 +113,14 @@ class Controller
 		$commentManager->addComment($id);
 
 	}
-
-	public function signalerComment($id)
+ 
+	public function signalerCommentaire()
 	{
 
 		$commentManager = new \Blog\Index\Model\commentManager();
-		$commentManager->signalerComment($id);
+		$response = $commentManager->signalerCommentaire();
+
+        echo json_encode(["msg" => $response]);
 
 	}
 

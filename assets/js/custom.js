@@ -4,114 +4,7 @@ $(function () {
 
 
 
-
-
-function loadCommentaire(type)
-{
-
-
-
-
- $.ajax({
-  type: 'POST',
-  url: 'http://blog-ecrivain.yohann-kipfer.com/index.php',
-  data: {idKit: idKit, type: type},
-  dataType: 'html', // JSON
-     
-beforeSend: function() {
-
-if(type != "objet")
-{
-$(".post-comments").html('<center><img src="https://leskits.com/assets/img/loader.svg" id="loaderAjoutCommentaire"></center>');
-}
-else
-{
-$("#commentairesObjets.post-comments").html('<center><img src="https://leskits.com/assets/img/loader.svg" id="loaderAjoutCommentaire"></center>');
-}
-
-
-           
-     },  
- success: function(html) {
-
-if(type != "objet")
-{
-$(".post-comments").html(html);
-}
-else
-{
-$("#commentairesObjets.post-comments").html(html);  
-}
-
- 
-                                               
-  }
-                
-                  
-
-                });
-
-
-
-}
-
-
-function submitCommentaireKitObjet()
-{
-
-var form=$("#form-ajoutCommentaireObjet");
-
-
-
-$("#successAjoutCommentaireObjet").hide();
-$("#errorAjoutCommentaireObjet").hide();
-
-
- $.ajax({
-  type: form.attr('method'),
-  url: form.attr('action'),
-  data: form.serialize(),
-  dataType: 'json', // JSON
-     
-beforeSend: function() {
-
-$("#loaderAjoutCommentaireObjet").show();
-           
-     },  
- success: function(json) {
-
- $("#loaderAjoutCommentaireObjet").hide();
-
-if(json.errorAjoutCommentaire === 'yes') {
-// Redirection vers le kit
-$("#successAjoutCommentaireObjet").show();
-$(form).closest('form').find("input[type=text], textarea").val("");
-
-loadCommentaireKit(json.type);
-
-
-
-
-} 
-else
-{
-$("#errorAjoutCommentaireObjet").show();
-$("#errorAjoutCommentaireObjet").html(json.errorAjoutCommentaire);
-
-}
-                                               
-  }
-                
-                  
-
-                });
-
-  
-}
-
-
-
-function submitCommentaireKit()
+function ajouterCommentaire()
 {
 
 var form=$("#form-ajoutCommentaire");
@@ -140,9 +33,8 @@ $("#loaderAjoutCommentaire").show();
 if(json.errorAjoutCommentaire === 'yes') {
 // Redirection vers le kit
 $("#successAjoutCommentaire").show();
-$(form).closest('form').find("input[type=text], textarea").val("");
 
-loadCommentaireKit(json.type);
+location.reload();
 
 
 
@@ -165,197 +57,20 @@ $("#errorAjoutCommentaire").html(json.errorAjoutCommentaire);
 }
 
 
-function ouvrirModalUpload(type)
-{
-$("#formulaireUpload").val(type);
-$("#uploadImage").modal('show');
 
-}
-
- function submitUploadImage()
- {
-var formulaireUpload = $("#formulaireUpload").val();
-
-var url = $('iframe[name=frameUpload]').contents().find('#urlImageUpload').html();
-if(url == "")
-{
-alert("Aucune image uploadé");
-}
- else
- {
-
-if(formulaireUpload == 'objet')
-{
-$("#urlImageObjet").val(url);
-$("#previewImageObjet").attr('src', url);
-}
-
-if(formulaireUpload == 'modifierKit')
-{
-$("#urlImageKit").val(url);
-$("#previewImageKit").attr('src', url);
-}
-
-if(formulaireUpload == 'profil')
-{
-$("#urlImageProfil").val(url);
-$("#previewImageProfil").attr('src', url);
-}
-
-
-if(formulaireUpload == 'modifierObjet')
-{
-$("#urlImageObjet").val(url);
-$("#previewImageObet").attr('src', url);
-}
-
-
-
-
-
-
-$("#uploadImage").modal('hide'); 
-
-
-}
-
-
- }
-   
-
-function submitDeconnexion()
-{
-
-
- $.ajax({
-  type: 'POST',
-  url: 'https://leskits.com/ajaxRequest/requeteMeDeconnecter.php',
-  dataType: 'json', // JSON
-     
-beforeSend: function() {
-
-
-           
-     },  
- success: function(json) {
-
-if(json.msg === 'ok')
-{
-window.location.href = "https://leskits.com";
-}
-else
-{
-  
-}                                          
-  }
-                
-                  
-
-                });
-
-
-
-
-}
-
-
-
-function supprimerLeKit(id)
-{
-
-
- $.ajax({
-  type: 'POST',
-  url: 'https://leskits.com/ajaxRequest/requeteSupprimerKit.php',
-  data: {'id_kit':id},
-  dataType: 'json', // JSON
-     
-beforeSend: function() {
-
-
-           
-     },  
- success: function(json) {
-
-if(json.msg === 'ok')
-{
-alert('Le Kit a bien été supprimé.');
-window.location.href = "https://leskits.com";
-}
-else
-{
-  
-}                                          
-  }
-                
-                  
-
-                });
-
-
-
-
-}
-
-function changeLink()
-{
-var link = $("#lienObjet").val();
-link = encodeURIComponent(link);
-
-
-
- $.ajax({
-  type: 'GET',
-  url: 'https://opengraph.io/api/1.1/site/' + link + '?app_id=5a6c96c23e22ba981a3954b3',
-  dataType: 'json', // JSON
-     
-beforeSend: function() {
-
-$("#loaderAjoutObjet").show();
-           
-     },  
- success: function(data) {
-
- $("#loaderAjoutObjet").hide();
-
-$("#titreObjet").val(data.hybridGraph.title);
-$("#descriptionObjet").val(data.hybridGraph.description);
-$("#urlImageObjet").val(data.hybridGraph.image);
-$("#previewImageObjet").attr('src', data.hybridGraph.image);
-
-                                               
-  }
-                
-                  
-
-                });
-
-
-
-
-
-
-}
-function changeImage()
-{
-var image = $("#urlImageObjet").val();
-
-$("#previewImageObjet").attr('src', image);
-
-}
 
 function responseCommentaire(id)
 {
 $("#idCommentaire").val(id);
 }
 
-function signalerCommentaire(type, id)
+function signalerCommentaire(id)
 {
-$("#typeCommentaire").val(type);
 $("#idCommentaireSignalement").val(id);
 
 $("#commentaireVerifiee").show();
 $("#successSignalement").hide();
+$("#submitSignalement").show();
 }
 
 function supprimerCommentaire(type, id, type2)
@@ -409,15 +124,15 @@ loadCommentaireKit(type2);
 
 function submitSignalement()
 {
-var typeCommentaire = $("#typeCommentaire").val();
+
 var idCommentaireSignalement = $("#idCommentaireSignalement").val();
 
 
 
  $.ajax({
   type: 'POST',
-  url: 'https://leskits.com/ajaxRequest/signalerCommentaire.php',
-  data: {typeCommentaire: typeCommentaire, idCommentaireSignalement: idCommentaireSignalement},
+  url: '/signalerCommentaire',
+  data: {idCommentaireSignalement: idCommentaireSignalement},
   dataType: 'json', // JSON
      
 beforeSend: function() {
@@ -427,9 +142,10 @@ $("#loaderSignalement").show();
      },  
  success: function(json) {
 
- $("#loaderSignalement").hide();
+$("#loaderSignalement").hide();
 $("#commentaireVerifiee").hide();
 $("#successSignalement").show();
+$("#submitSignalement").hide();
 
                                                
   }

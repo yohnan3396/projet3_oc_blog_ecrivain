@@ -10,16 +10,50 @@ class commentManager extends Manager
 {
 
 
+    public function signalerCommentaire()
+    {
+
+    $db = $this->dbConnect();
+    
+        if(isset($_POST['idCommentaireSignalement']) AND is_numeric($_POST['idCommentaireSignalement']))
+        {
+
+             // Connexion à la base de données
+
+
+            $temps = time();
+            $inserer = $db->prepare("INSERT INTO signaler_commentaire(id_commentaire, temps)
+                VALUES(:id_commentaire, :temps)");
+            $inserer->execute(array(
+                "id_commentaire" => htmlspecialchars($_POST['idCommentaireSignalement']),
+                "temps" => $temps,
+            ));
 
 
 
-    public function addComment($parameters)
+            $msg = "yes";
+
+        
+        }
+        else
+        {
+            $msg = "Un problème est survenu";
+        }
+
+        return $msg;
+
+        
+
+    }
+
+
+    public function addComment()
     {
         // Connexion à la base de données
         $db = $this->dbConnect();
      
 
-        if(isset($_POST['pseudo']) AND isset($_POST['commentaire']) AND is_numeric($_POST['id_article']))
+        if(isset($_POST['pseudo']) AND isset($_POST['commentaire']) AND is_numeric($_POST['idArticle']))
         {
      
 
@@ -37,11 +71,11 @@ class commentManager extends Manager
                 "commentaire" => htmlspecialchars($_POST['commentaire']),
                 "temps" => $temps,
                 "pseudo" => htmlspecialchars($_POST['pseudo']),
-                "id_article" => $_POST['id_article'],
+                "id_article" => $_POST['idArticle'],
                 "ip" => $adresse_ip,
             ));
 
-             $msg = "ok";
+             $msg = "yes";
 
 
         }
