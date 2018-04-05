@@ -8,12 +8,35 @@ require_once('model/commentManager.php');
 class Controller 
 {
 
-	// Affichage du panneau administration
+
+	public function afficherAddArticle($id_article)
+	{
+
+	$blogManager = new \Blog\Index\Model\blogManager();
+    
+    if($id_article != "none")
+    {
+
+	list($articlesTotal) = $blogManager->getArticles("noPage", "noCateg", $id_article);
+    }
+  
+
+	require('view/backend/add-article.php');
+	}
+
+
+	// Affichage du panneau administratio
 
 	public function afficherPanneauAdmin()
 	{
 
-		require('view/backend/admin.php');
+	$blogManager = new \Blog\Index\Model\blogManager();
+	$commentManager = new \Blog\Index\Model\commentManager();
+
+	list($articlesTotal) = $blogManager->getArticles("all", "noCateg", "all");
+	list($signalerCommentaireTotal) = $commentManager->getSignalerCommentaire();
+
+	require('view/backend/admin.php');
 	}
 
 
@@ -62,35 +85,14 @@ class Controller
 
 	}
 
-	public function deleteArticle($id)
+	public function deleteArticle()
 	{
 
 
 		$blogManager = new \Blog\Index\Model\blogManager();
+		$response = $blogManager->deleteArticle();
 
-		$blogManager->deleteArticle($id);
-
-	}
-
-	public function addArticle($parameters)
-	{
-
-
-		$blogManager = new \Blog\Index\Model\blogManager();
-		$blogManager->addArticle($parameters);
-
-
-	}
-
-
-	public function updateArticle($parameters)
-	{
-
-
-		$blogManager = new \Blog\Index\Model\blogManager();
-		$blogManager->updateArticle($parameters);
-
-
+		echo json_encode(["msg" => $response]);
 	}
 
 
@@ -106,11 +108,15 @@ class Controller
 	}
 
 
-	public function deleteComment($id)
+	public function deleteCommentaire()
 	{
 
 		$commentManager = new \Blog\Index\Model\commentManager();
-		$commentManager->addComment($id);
+		$response = $commentManager->annulerSignalement();
+		$response2 = $commentManager->deleteCommentaire();
+
+
+        echo json_encode(["msg" => $response, "msg2" => $response2]);
 
 	}
  
@@ -124,6 +130,40 @@ class Controller
 
 	}
 
+	public function annulerSignalement()
+	{
+
+		$commentManager = new \Blog\Index\Model\commentManager();
+		$response = $commentManager->annulerSignalement();
+
+        echo json_encode(["msg" => $response]);
+
+	}
+
+
+	public function addArticle()
+	{
+
+
+		$blogManager = new \Blog\Index\Model\blogManager();
+		$response = $blogManager->addArticle();
+
+        echo json_encode(["msg" => $response]);
+
+	}
+
+
+	public function updateArticle()
+	{
+
+
+		$blogManager = new \Blog\Index\Model\blogManager();
+		$response = $blogManager->updateArticle();
+
+        echo json_encode(["msg" => $response]);
+
+
+	}
 
 }
  

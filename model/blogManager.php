@@ -9,6 +9,65 @@ require_once("model/Manager.php");
 class blogManager extends Manager
 {
 
+    public function addArticle()
+    {
+        // Connexion à la base de données
+        $db = $this->dbConnect();
+     
+
+        if(isset($_POST['contenu_html']))
+        {
+     
+
+            $temps = time();
+
+            $inserer = $db->prepare("INSERT INTO blog(titre, url_photo, contenu_html, date_creation, date_modification, id_membre, categorie_id, title_alt_photo, description_courte)
+                VALUES(:titre, :url_photo, :contenu_html, :date_creation, :date_modification, :id_membre, :categorie_id, :title_alt_photo, :description_courte)");
+            $inserer->execute(array(
+                "titre" => htmlspecialchars($_POST['titre']),
+                "url_photo" => htmlspecialchars($_POST['url_image']),
+                "contenu_html" => $_POST['contenu_html'],
+                "date_creation" => $temps,
+                "date_modification" => "",
+                "id_membre" => "1",
+                "categorie_id" => htmlspecialchars($_POST['categorie_id']),
+                "title_alt_photo" => htmlspecialchars($_POST['texte_remplacement_img']),
+                "description_courte" => htmlspecialchars($_POST['description_courte']),
+            ));
+
+             $msg = "yes";
+
+
+
+        }
+        else
+        {
+        
+            $msg = "Erreur";
+
+        }
+
+     return $msg;
+
+    }
+
+
+
+    public function deleteArticle()
+    {
+        // Connexion à la base de données
+        $db = $this->dbConnect();
+
+        $sql = "DELETE FROM blog WHERE id = ?  ";
+        $stmt = $db->prepare($sql);
+        $stmt->execute(array($_POST['id']));
+
+        $msg = "ok";
+
+        return $msg; 
+
+    }
+
 
     public function getArticles($numeroPage, $categorie, $idArticle)
     {
@@ -20,6 +79,11 @@ class blogManager extends Manager
         if ($numeroPage == "noPage")
         {
             $numeroPage = 1;
+        }
+        elseif($numeroPage == "all")
+        {
+        $numeroPage = 1;
+        $nombreDarticlesParPage = 9999;     
         }
 
 

@@ -52,7 +52,7 @@ foreach($articlesTotal as $article):?>
                     <div class="post-image"><img src="<?php echo $article->getUrlImage();?>" alt="<?php echo $article->getTitreAltPhoto();?>"></div>
                     <div class="post-content">
                       
-                     Contenu
+                     <?php echo $article->getContenuArticle();?>
 
               
                     </div>
