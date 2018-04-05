@@ -25,7 +25,7 @@
 
                 <form action="/reqAddArticle" method="post" id="form-article" class="validate-form">
                 
-                    <input type="hidden" id="" name="" value="<?php echo $article->getId(); ?>">
+                    <input type="hidden" id="idArticle" name="idArticle" value="<?php echo $article->getId(); ?>">
 
                     <input type="text"  id="titre" name="titre" class="form-control" placeholder="Titre de l'article" value="<?php echo $article->getTitre(); ?>" required>
 

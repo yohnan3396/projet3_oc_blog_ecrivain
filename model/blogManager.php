@@ -9,6 +9,48 @@ require_once("model/Manager.php");
 class blogManager extends Manager
 {
 
+    public function updateArticle()
+    {
+        // Connexion à la base de données
+        $db = $this->dbConnect();
+     
+
+        if(isset($_POST['contenu_html']))
+        {
+     
+
+            $temps = time();
+
+
+            $req = $db->prepare("UPDATE blog SET titre = :titre, url_photo = :url_photo, contenu_html = :contenu_html, date_modification = :date_modification, categorie_id = :categorie_id, title_alt_photo = :title_alt_photo, description_courte = :description_courte WHERE id='$_POST[idArticle]' ");
+            $req->execute(array(
+              'titre' => htmlspecialchars($_POST['titre']),
+              'url_photo' => htmlspecialchars($_POST['url_image']),
+              'contenu_html' => htmlspecialchars($_POST['contenu_html']),
+              'date_modification' =>  $temps,
+              'categorie_id' =>  htmlspecialchars($_POST['categorie_id']),
+              'title_alt_photo' => htmlspecialchars($_POST['texte_remplacement_img']),
+              'description_courte' => htmlspecialchars($_POST['description_courte']),
+              ));
+
+
+             $msg = "yes";
+
+
+
+        }
+        else
+        {
+        
+            $msg = "Erreur";
+
+        }
+
+     return $msg;
+
+    }
+
+
     public function addArticle()
     {
         // Connexion à la base de données
