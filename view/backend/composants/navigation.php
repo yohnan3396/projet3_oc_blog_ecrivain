@@ -1,7 +1,7 @@
   <nav id="main-menu">
       <div class="nav-wrapper">
         <ul class="nav nav-primary">
-            <li><a href="http://blog-ecrivain.yohann-kipfer.com"><i class="li-home"></i>Les articles</a></li>
+            <li><a href="http://blog-ecrivain.yohann-kipfer.com/blog-admin"><i class="li-home"></i>Accueil panneau admin</a></li>
        
     
 

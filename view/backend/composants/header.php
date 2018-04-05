@@ -25,7 +25,15 @@
 <!-- CSS Base -->
 <link id="theme" rel="stylesheet" href="http://blog-ecrivain.yohann-kipfer.com/assets/css/themes/theme-blue.min.css" />
 
-
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=q9aujo9wrwn53d41bzbuz46jwc6vy9297bzr4m26dvh071l6"></script>
+ <script>tinymce.init({
+    selector: "textarea",
+    setup: function (editor) {
+        editor.on('change', function () {
+            tinymce.triggerSave();
+        });
+    }
+});</script>
 
 
 </head>
@@ -35,7 +43,7 @@
 
 <div id="page-loader" class="bg-white">
     <svg class="loader" width="32px" height="32px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><circle class="circle" fill="none" stroke-width="2" stroke-linecap="round" cx="16" cy="16" r="14"></circle></svg>
-    <span class="loading-txt text-muted"><?php echo $language[$langueAffichage]['Chargement']; ?></span>
+    <span class="loading-txt text-muted">Chargement</span>
 </div>
 <!-- Header -->
 <header id="header">

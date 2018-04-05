@@ -26,7 +26,7 @@ class blogManager extends Manager
             $req->execute(array(
               'titre' => htmlspecialchars($_POST['titre']),
               'url_photo' => htmlspecialchars($_POST['url_image']),
-              'contenu_html' => htmlspecialchars($_POST['contenu_html']),
+              'contenu_html' => $_POST['contenu_html'],
               'date_modification' =>  $temps,
               'categorie_id' =>  htmlspecialchars($_POST['categorie_id']),
               'title_alt_photo' => htmlspecialchars($_POST['texte_remplacement_img']),
