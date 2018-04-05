@@ -39,6 +39,10 @@ class Controller
 
 		list($articlesTotal, $nombreDePages, $categTotal, $commentairesTotal) = $blogManager->getArticles($numeroPage, $categorie, $idArticle);
 
+        if($idArticle != "all")
+        {
+        $commentairesTotal = $commentManager->readComment($idArticle);
+        }
 
 		if($numeroPage == "noPage")
 		{
@@ -48,11 +52,6 @@ class Controller
 		else
 		{
 		    $numeroPage = $numeroPage;
-		}
-
-		if($idArticle)
-		{
-        	$commentaires = $commentManager->getAll($idArticle);
 		}
 
 		$categorie = $categorie;
@@ -106,7 +105,6 @@ class Controller
 		$commentManager->addComment($parameters);
         $commentaires = $commentManager->getAll();
 
-        require('')
 	}
 
 

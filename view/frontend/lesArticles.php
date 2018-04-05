@@ -21,11 +21,12 @@
 
                 <ul class="nav nav-pills mb-50 text-center" data-filter-list="#works-list">
                      
-                     <li class="nav-item  <?php if($categorie == "noCateg")  { echo 'active'; } ?>"><a href="http://blog-ecrivain.yohann-kipfer.com/le-blog" class="nav-link" ><i class="pe-7s-folder"></i>Tous</a></li>
+                     <li class="nav-item  <?php if($categorie == "noCateg")  { echo 'active'; } ?>"><a href="/" class="nav-link" ><i class="pe-7s-folder"></i>Tous</a></li>
                 
-                <?php print_r($categTotal); foreach($categTotal as $categorie):?>
 
-                      <li class="nav-item"><a href="?categ=<?php echo $categorieReq['id']; ?>" class="nav-link <?php if($categorie == $categorieReq['id']) { echo 'active';  } ?>"><i class="pe-7s-graph1"></i><?php echo $categorieReq[$categorieArticle]; ?></a></li>
+                <?php foreach($categTotal as $categorieReq):?>
+
+                      <li class="nav-item"><a href="?categ=<?php echo $categorieReq->getId();?>" class="nav-link <?php if($categorie == $categorieReq->getId()) { echo 'active';  } ?>"><i class="pe-7s-graph1"></i><?php echo $categorieReq->getName();?></a></li>
 
                 <?php endforeach; ?>
 
@@ -42,30 +43,32 @@
                     <div class="masonry-sizer col-sm-6 col-xs-12"></div>
                                
 
-                    <?php print_r($articlesTotal); foreach($articlesTotal as $article):?>
+                    <?php  foreach($articlesTotal as $article):?>
 
                         <div class="masonry-item col-sm-6 col-xs-12">
                                             <!-- Post - Item -->
                             <article class="post item">
                                  
                                 <div class="post-image">
-                                     <img src="" alt="">
+                                     <img src="<?php echo $article->getUrlImage();?>" alt="<?php echo $article->getTitreAltPhoto();?>">
                                 </div>
                                                 
                                 <div class="post-content">
-                                     <span class="date text-muted"></span>
+                                     <span class="date text-muted"><?php echo $article->getDate();?></span>
                                     
-                                     <h4><a href="blog-post.html"><?php echo $article->getId();?></a></h4>
-                                                   
-                                     <a href="http://blog-ecrivain.yohann-kipfer.com/article/" class="btn btn-primary btn-sm"></a>
+                                     <h4><?php echo $article->getTitre();?></h4>
+                                    
+                                    <p> <?php echo $article->getDescriptionCourte();?> </p>
+         
+                                     <a href="articleIndividuel?idArticle=<?php echo $article->getId();?>" class="btn btn-primary btn-sm">Lire l'article</a>
                                 
                                 </div>
                                 
-                                <ul class="post-meta">
-                                    
-                                    <li><i class="li-usb1"></i><a href="?categ=<?php echo $article['categorie_id']; ?>"></a></li>
-                                           
-                                </ul>
+                             <ul class="post-meta">
+                                <li><i class="li-usb1"></i><a href="?categ=<?php echo $article->getCategorieID();?>"><?php echo $article->getCategorieName();?></a></li>
+                        
+                            </ul>
+
                             
                             </article>
 
@@ -74,9 +77,8 @@
                     <?php endforeach;?>
 
                 </div>
+                               
                                 <!-- Pagination -->
-
-
 
                 <center>
                 <UL class="pagination">
@@ -99,7 +101,7 @@
                     <LI class="page-item">
                         <A class="page-link" href="?numeroPage=<?php echo $pageMoinsUn.$urlAajouter; ?>" aria-label="Previous">
                             <I class="ti-angle-left"></I>
-                            <SPAN class="sr-only"><?php echo $language[$langueAffichage]['Precedent']; ?></SPAN>
+                            <SPAN class="sr-only">Précédent</SPAN>
                         </A>
                     </LI>
                 <?php
@@ -122,7 +124,7 @@
                     <LI class="page-item">
                         <A class="page-link" href="?numeroPage=<?php echo $pagePlusUn.$urlAajouter; ?>" aria-label="Next">
                             <I class="ti-angle-right"></I>
-                            <SPAN class="sr-only"><?php echo $language[$langueAffichage]['Suivant']; ?></SPAN>
+                            <SPAN class="sr-only">Suivant</SPAN>
                         </A>
                     </LI>
 
@@ -138,7 +140,7 @@
                                 <!-- Widget - Recent posts -->
                     <div class="widget widget-recent-posts">
                         
-                        <h6 class="text-muted"><?php echo $language[$langueAffichage]['Publicite']; ?></h6>
+                        <h6 class="text-muted">Ads</h6>
            
                     </div>
                            

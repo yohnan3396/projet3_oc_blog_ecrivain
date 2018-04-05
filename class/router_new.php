@@ -36,8 +36,9 @@ class MyRouter
                             $idArticle = $_GET['idArticle'];
 
 
-                            afficherBlog($numeroPage,  $categorie, $idArticle, "articleIndividuel");
 
+                    $controller = new Controller;
+                    $controller->afficherBlog($numeroPage,  $categorie, $idArticle, "articleIndividuel");
                     }
 
 

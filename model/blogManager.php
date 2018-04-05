@@ -83,6 +83,9 @@ class blogManager extends Manager
             $articleX->setDescriptionCourte($article['description_courte']);
             $articleX->setTitreAltPhoto($article['title_alt_photo']);
             $articleX->setContenuArticle($article['contenu_html']);
+            $articleX->setUrlImage($article['url_photo']);
+            $articleX->setCategorieName($article['categorie']);
+            $articleX->setCategorieID($article['categorie_id']);
             $articlesTotal[] = $articleX; // tableau d'objet
              
 
@@ -90,31 +93,7 @@ class blogManager extends Manager
         $articles->closeCursor();
 
 
-        // On récupère les commentaires si on est sur la vue articleIndividuel.php
-
-         if($idArticle != "all")
-        {
-
-                   // On récupère les catégories pour la vue lesArticles.php afin de pouvoir effectuer le trie par catégorie.
-
-            $commentaires = $db->prepare("SELECT * FROM blog_commentaires WHERE id_article = ? ");
-            $commentaires->execute(array($idArticle));       
-            while ($commentaire = $commentaires->fetch())
-            { 
-     
-                $commentairesX = new Commentaire();
-                $commentairesX->setId($commentaire['id']);
-                $commentairesX->setCommentaire($commentaire['commentaire']);
-                $commentairesX->setPseudo($commentaire['pseudo']);
-                $commentairesX->setTemps($commentaire['temps']);
-                $commentairesTotal[] = $commentairesX; // tableau d'objet
-                 
-
-            } 
-            $commentaires->closeCursor();
-
-        }
-
+ 
 
 
         // On récupère les catégories pour la vue lesArticles.php afin de pouvoir effectuer le trie par catégorie.
@@ -144,64 +123,6 @@ class blogManager extends Manager
 
 }
 
-
-class Commentaire
-{
-
-
-    private $id;
-    private $commentaire;
-    private $pseudo;
-    private $temps;
-
- 
-    public function getId()
-    {
-        return $this->id;
-    }
-   
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getCommentaire()
-    {
-        return $this->commentaire;
-    }
-
-    public function setCommentaire($commentaire)
-    {
-        $this->commentaire = $commentaire;
-    }
-
-
-    public function getPseudo()
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo($pseudo)
-    {
-        $this->pseudo = $pseudo;
-    }
-
-
-
-    public function getTemps()
-    {
-        return $this->temps;
-    }
-
-    public function setTemps($temps)
-    {
-        $this->temps = $temps;
-    }
-
-
-
-
-}
 
 
 
@@ -250,7 +171,13 @@ class Article
     private $description_courte;
     private $title_alt_photo;
     private $contenu_html;
+    private $url_photo;
+    private $categorie_name;
+    private $categorie_id;
  
+
+
+
     public function getId()
     {
         return $this->id;
@@ -273,11 +200,13 @@ class Article
 
     public function getDate()
     {
+
         return $this->date_creation;
     }
 
     public function setDate($date)
     {
+        $date = date("d/m/Y", $date);
         $this->date_creation = $date;
     }
 
@@ -309,6 +238,37 @@ class Article
     public function setContenuArticle($contenu_html)
     {
         $this->contenu_html = $contenu_html;
+    }
+
+
+    public function getUrlImage()
+    {
+        return $this->url_photo;
+    }
+   
+    public function setUrlImage($url_photo)
+    {
+        $this->url_photo = $url_photo;
+    }
+
+    public function getCategorieName()
+    {
+        return $this->categorie_name;
+    }
+   
+    public function setCategorieName($categorie_name)
+    {
+        $this->categorie_name = $categorie_name;
+    }
+
+    public function getCategorieID()
+    {
+        return $this->categorie_id;
+    }
+   
+    public function setCategorieID($categorie_id)
+    {
+        $this->categorie_id = $categorie_id;
     }
 
 
