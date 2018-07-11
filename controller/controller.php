@@ -12,16 +12,14 @@ class Controller
 	public function afficherAddArticle($id_article)
 	{
 
-	$blogManager = new \Blog\Index\Model\blogManager();
+		$blogManager = new \Blog\Index\Model\blogManager();
     
-    if($id_article != "none")
-    {
-
-	list($articlesTotal) = $blogManager->getArticles("noPage", "noCateg", $id_article);
-    }
-  
-
-	require('view/backend/add-article.php');
+    		if($id_article != "none")
+    		{
+			list($articlesTotal) = $blogManager->getArticles("noPage", "noCateg", $id_article);
+		}
+ 
+		require('view/backend/add-article.php');
 	}
 
 
@@ -29,14 +27,13 @@ class Controller
 
 	public function afficherPanneauAdmin()
 	{
+		$blogManager = new \Blog\Index\Model\blogManager();
+		$commentManager = new \Blog\Index\Model\commentManager();
 
-	$blogManager = new \Blog\Index\Model\blogManager();
-	$commentManager = new \Blog\Index\Model\commentManager();
+		list($articlesTotal) = $blogManager->getArticles("all", "noCateg", "all");
+		list($signalerCommentaireTotal) = $commentManager->getSignalerCommentaire();
 
-	list($articlesTotal) = $blogManager->getArticles("all", "noCateg", "all");
-	list($signalerCommentaireTotal) = $commentManager->getSignalerCommentaire();
-
-	require('view/backend/admin.php');
+		require('view/backend/admin.php');
 	}
 
 
@@ -46,7 +43,6 @@ class Controller
 	{
 
 		$erreurManager = new \Blog\Index\Model\erreurManager();
-
 		$erreur = $erreurManager->getErreur($erreur);
 		require('view/frontend/affichageErreur.php');
 	}
@@ -55,17 +51,14 @@ class Controller
 
 	public function afficherBlog($numeroPage,  $categorie, $idArticle, $view)
 	{
-
-
 		$blogManager = new \Blog\Index\Model\blogManager();
 		$commentManager = new \Blog\Index\Model\commentManager();
-
 		list($articlesTotal, $nombreDePages, $categTotal, $commentairesTotal) = $blogManager->getArticles($numeroPage, $categorie, $idArticle);
 
-        if($idArticle != "all")
-        {
-        $commentairesTotal = $commentManager->readComment($idArticle);
-        }
+        	if($idArticle != "all")
+        	{
+        		$commentairesTotal = $commentManager->readComment($idArticle);
+        	}
 
 		if($numeroPage == "noPage")
 		{
@@ -79,7 +72,6 @@ class Controller
 
 		$categorie = $categorie;
 
-
 		require('view/frontend/'.$view.'.php');
 
 
@@ -87,11 +79,8 @@ class Controller
 
 	public function deleteArticle()
 	{
-
-
 		$blogManager = new \Blog\Index\Model\blogManager();
 		$response = $blogManager->deleteArticle();
-
 		echo json_encode(["msg" => $response]);
 	}
 
@@ -103,21 +92,16 @@ class Controller
 		$commentManager = new \Blog\Index\Model\commentManager();
 		$response = $commentManager->addComment();
         
-        echo json_encode(["errorAjoutCommentaire" => $response]);
-
+        	echo json_encode(["errorAjoutCommentaire" => $response]);
 	}
 
 
 	public function deleteCommentaire()
 	{
-
 		$commentManager = new \Blog\Index\Model\commentManager();
 		$response = $commentManager->annulerSignalement();
 		$response2 = $commentManager->deleteCommentaire();
-
-
-        echo json_encode(["msg" => $response, "msg2" => $response2]);
-
+        	echo json_encode(["msg" => $response, "msg2" => $response2]);
 	}
  
 	public function signalerCommentaire()
@@ -125,9 +109,7 @@ class Controller
 
 		$commentManager = new \Blog\Index\Model\commentManager();
 		$response = $commentManager->signalerCommentaire();
-
-        echo json_encode(["msg" => $response]);
-
+        	echo json_encode(["msg" => $response]);
 	}
 
 	public function annulerSignalement()
@@ -135,33 +117,25 @@ class Controller
 
 		$commentManager = new \Blog\Index\Model\commentManager();
 		$response = $commentManager->annulerSignalement();
-
-        echo json_encode(["msg" => $response]);
-
+        	echo json_encode(["msg" => $response]);
 	}
 
 
 	public function addArticle()
 	{
-
-
 		$blogManager = new \Blog\Index\Model\blogManager();
 		$response = $blogManager->addArticle();
 
-        echo json_encode(["msg" => $response]);
-
+        	echo json_encode(["msg" => $response]);
 	}
 
 
 	public function updateArticle()
 	{
-
-
 		$blogManager = new \Blog\Index\Model\blogManager();
 		$response = $blogManager->updateArticle();
 
-        echo json_encode(["msg" => $response]);
-
+        	echo json_encode(["msg" => $response]);
 
 	}
 
