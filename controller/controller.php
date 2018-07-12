@@ -8,35 +8,30 @@ require_once('model/commentManager.php');
 class Controller 
 {
 
-
 	public function afficherAddArticle($id_article)
 	{
 
-	$blogManager = new \Blog\Index\Model\blogManager();
+		$blogManager = new \Blog\Index\Model\blogManager();
     
-    if($id_article != "none")
-    {
-
-	list($articlesTotal) = $blogManager->getArticles("noPage", "noCateg", $id_article);
-    }
-  
-
-	require('view/backend/add-article.php');
+	    if($id_article != "none")
+	    {
+			list($articlesTotal) = $blogManager->getArticles("noPage", "noCateg", $id_article);
+	    }
+	  
+		require('view/backend/add-article.php');
 	}
 
-
-	// Affichage du panneau administratio
 
 	public function afficherPanneauAdmin()
 	{
 
-	$blogManager = new \Blog\Index\Model\blogManager();
-	$commentManager = new \Blog\Index\Model\commentManager();
+		$blogManager = new \Blog\Index\Model\blogManager();
+		$commentManager = new \Blog\Index\Model\commentManager();
 
-	list($articlesTotal) = $blogManager->getArticles("all", "noCateg", "all");
-	list($signalerCommentaireTotal) = $commentManager->getSignalerCommentaire();
+		list($articlesTotal) = $blogManager->getArticles("all", "noCateg", "all");
+		list($signalerCommentaireTotal) = $commentManager->getSignalerCommentaire();
 
-	require('view/backend/admin.php');
+		require('view/backend/admin.php');
 	}
 
 
@@ -64,7 +59,7 @@ class Controller
 
         if($idArticle != "all")
         {
-        $commentairesTotal = $commentManager->readComment($idArticle);
+        	$commentairesTotal = $commentManager->readComment($idArticle);
         }
 
 		if($numeroPage == "noPage")
@@ -87,7 +82,6 @@ class Controller
 
 	public function deleteArticle()
 	{
-
 
 		$blogManager = new \Blog\Index\Model\blogManager();
 		$response = $blogManager->deleteArticle();
@@ -114,7 +108,6 @@ class Controller
 		$commentManager = new \Blog\Index\Model\commentManager();
 		$response = $commentManager->annulerSignalement();
 		$response2 = $commentManager->deleteCommentaire();
-
 
         echo json_encode(["msg" => $response, "msg2" => $response2]);
 
@@ -155,7 +148,6 @@ class Controller
 
 	public function updateArticle()
 	{
-
 
 		$blogManager = new \Blog\Index\Model\blogManager();
 		$response = $blogManager->updateArticle();

@@ -8,9 +8,7 @@ class MyRouter
 
     public function setGet($page)
     {
-
          $this->page = $page;
-
     }
 
     public function activeUrl()
@@ -18,45 +16,30 @@ class MyRouter
 
         $page = $this->page;
 
-
         try {
             if (isset($page)) 
             {
-
-
-                
+ 
                 if ($page == 'articleIndividuel') {
                  
-
                     if (isset($_GET['idArticle']) && is_numeric($_GET['idArticle']))
                     {
-                  
-                            $categorie = "noCateg";
-                            $numeroPage = "noPage";
-                            $idArticle = $_GET['idArticle'];
+                      
+                        $categorie = "noCateg";
+                        $numeroPage = "noPage";
+                        $idArticle = $_GET['idArticle'];
 
-
-
-                    $controller = new Controller;
-                    $controller->afficherBlog($numeroPage,  $categorie, $idArticle, "articleIndividuel");
+                        $controller = new Controller;
+                        $controller->afficherBlog($numeroPage,  $categorie, $idArticle, "articleIndividuel");
                     }
-
-
-
 
             }
             elseif($page == "addComment") {
 
             if(isset($_POST['idArticle']) AND is_numeric($_POST['idArticle']))
             {
-       
-                        
                     $controller = new Controller;
                     $controller->addComment();            
-                
-            
-
-
             }
 
                        
@@ -66,13 +49,8 @@ class MyRouter
 
             if(isset($_POST['idCommentaireSignalement']) AND is_numeric($_POST['idCommentaireSignalement']))
             {
-       
-                        
                     $controller = new Controller;
                     $controller->signalerCommentaire();            
-            
-
-
             }
 
                        
@@ -82,12 +60,9 @@ class MyRouter
 
             if(isset($_POST['id']) AND is_numeric($_POST['id']))
             {
-       
-                        
+    
                     $controller = new Controller;
                     $controller->deleteArticle();            
-            
-
 
             }
 
@@ -98,12 +73,9 @@ class MyRouter
 
             if(isset($_POST['id']) AND is_numeric($_POST['id']))
             {
-       
-                        
+   
                     $controller = new Controller;
                     $controller->annulerSignalement();            
-            
-
 
             }
 
@@ -114,12 +86,9 @@ class MyRouter
 
             if(isset($_POST['id']) AND is_numeric($_POST['id']))
             {
-       
-                        
+   
                     $controller = new Controller;
                     $controller->deleteCommentaire();            
-            
-
 
             }
 
@@ -168,27 +137,21 @@ class MyRouter
 
                     if (isset($_GET['categ']))
                     {
-
                          $categorie = $_GET['categ'];
-
                     }
                     else 
                     {
-
                           $categorie = "noCateg";
-
                     }
 
                     if (isset($_GET['numeroPage']) && $_GET['numeroPage'] > 0) {
 
                             $numeroPage = $_GET['numeroPage'];
-
                     }
                     else 
                     {
 
                          $numeroPage = "noPage";
-
                     }
 
                     $idArticle = "all";
@@ -196,24 +159,13 @@ class MyRouter
                     $controller = new Controller;
                     $controller->afficherBlog($numeroPage,  $categorie, $idArticle, "lesArticles");
 
-               
-
-
-     
             }
             else
             {
 
-           
-      
                     $erreur = 404;
                     $controller = new Controller;
                     $controller->erreur($erreur);
-
-
-            
-
-
 
             }
         }

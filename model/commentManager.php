@@ -3,12 +3,13 @@
 namespace Blog\Index\Model;
 
 require_once("model/Manager.php");
+require_once("class/commentaire.php");
+require_once("class/signalerCommentaire.php");
 
 // Pour les vues lesArticles.php & articleIndividuel.php
 
 class commentManager extends Manager
 {
-
 
     public function signalerCommentaire()
     {
@@ -43,7 +44,6 @@ class commentManager extends Manager
         return $msg;
 
         
-
     }
 
 
@@ -55,8 +55,6 @@ class commentManager extends Manager
 
         if(isset($_POST['pseudo']) AND isset($_POST['commentaire']) AND is_numeric($_POST['idArticle']))
         {
-     
-
         // Vérifications 
 
         if(strlen($_POST['pseudo']) >= 3 AND strlen($_POST['commentaire']) >= 10)
@@ -65,17 +63,28 @@ class commentManager extends Manager
             $temps = time();
             $adresse_ip = $_SERVER['REMOTE_ADDR'];
 
-            $inserer = $db->prepare("INSERT INTO blog_commentaires(commentaire, temps, pseudo, id_article, ip)
-                VALUES(:commentaire, :temps, :pseudo, :id_article, :ip)");
-            $inserer->execute(array(
-                "commentaire" => htmlspecialchars($_POST['commentaire']),
-                "temps" => $temps,
-                "pseudo" => htmlspecialchars($_POST['pseudo']),
-                "id_article" => $_POST['idArticle'],
-                "ip" => $adresse_ip,
-            ));
+            $ipPresente = $db->query("SELECT COUNT(*) FROM blog_commentaires WHERE ip='$adresse_ip' ")->fetchColumn();  
 
-             $msg = "yes";
+            if($ipPresente == 0)
+            {
+
+                $inserer = $db->prepare("INSERT INTO blog_commentaires(commentaire, temps, pseudo, id_article, ip)
+                    VALUES(:commentaire, :temps, :pseudo, :id_article, :ip)");
+                $inserer->execute(array(
+                    "commentaire" => htmlspecialchars($_POST['commentaire']),
+                    "temps" => $temps,
+                    "pseudo" => htmlspecialchars($_POST['pseudo']),
+                    "id_article" => $_POST['idArticle'],
+                    "ip" => $adresse_ip,
+                ));
+
+                 $msg = "yes";
+
+            }
+            else
+            {
+                 $msg = "Le double commentaire est interdit.";
+            }
 
 
         }
@@ -100,7 +109,6 @@ class commentManager extends Manager
     public function readComment($idArticle)
     {
     
-
             $db = $this->dbConnect();
      
 
@@ -193,155 +201,5 @@ class commentManager extends Manager
 }
 
 
-
-
-class signalerCommentaire
-{
-
-
-    private $id;
-    private $commentaire;
-    private $pseudo;
-    private $temps;
-    private $id_article;
-    private $id_commentaire;
-
-     public function getIdArticle()
-    {
-        return $this->id_article;
-    }
-   
-    public function setIdArticle($id_article)
-    {
-        $this->id_article = $id_article;
-    }
-
-
-    public function getId()
-    {
-        return $this->id;
-    }
-   
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getIdCommentaire()
-    {
-        return $this->id_commentaire;
-    }
-   
-    public function setIdCommentaire($id_commentaire)
-    {
-        $this->id_commentaire = $id_commentaire;
-    }
-
-
-    public function getCommentaire()
-    {
-        return $this->commentaire;
-    }
-
-    public function setCommentaire($commentaire)
-    {
-
-        $this->commentaire = $commentaire;
-    }
-
-
-    public function getPseudo()
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo($pseudo)
-    {
-        $this->pseudo = $pseudo;
-    }
-
-
-
-    public function getDate()
-    {
-
-        return $this->temps;
-    }
-
-    public function setDate($temps)
-    {
-        $temps = date('d/m/Y - h:i:s', $temps);             
-        $this->temps = $temps;
-    }
-
-
-
-
-}
-
-
-
-
-
-class Commentaire
-{
-
-
-    private $id;
-    private $commentaire;
-    private $pseudo;
-    private $temps;
-
- 
-    public function getId()
-    {
-        return $this->id;
-    }
-   
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    public function getCommentaire()
-    {
-        return $this->commentaire;
-    }
-
-    public function setCommentaire($commentaire)
-    {
-
-        $this->commentaire = $commentaire;
-    }
-
-
-    public function getPseudo()
-    {
-        return $this->pseudo;
-    }
-
-    public function setPseudo($pseudo)
-    {
-        $this->pseudo = $pseudo;
-    }
-
-
-
-    public function getTemps()
-    {
-
-        return $this->temps;
-    }
-
-    public function setTemps($temps)
-    {
-        $temps = date('d/m/Y - h:i:s', $temps);             
-        $this->temps = $temps;
-    }
-
-
-
-
-}
 
 
