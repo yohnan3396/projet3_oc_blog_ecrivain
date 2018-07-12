@@ -5,7 +5,6 @@
 
 
 
-
 <!-- Page Title -->
     <div class="page-title pb-0">
         <div class="container-fluid container-custom">
@@ -22,7 +21,8 @@
 
             <center><a href="/add-article" class="btn btn-primary btn-lg"> Créer un article</a></center>                   
             <h2> Articles </h2>
-                       
+                
+
             <table style="width:100%;">
 
 
@@ -72,12 +72,13 @@
 
 
                     <?php  foreach($signalerCommentaireTotal as $commentaireSignaler):?>
+
                          <tr id="trCommentaire<?php echo $commentaireSignaler->getId(); ?>">
                         <td><?php echo $commentaireSignaler->getCommentaire();?></td>
                         <td><?php echo $commentaireSignaler->getDate();?></td>
                         <td><?php echo $commentaireSignaler->getIdArticle();?></td>
                         <td><?php echo $commentaireSignaler->getPseudo();?></td>
-                        <td><a href="javascript:void(0)" onclick="deleteCommentaire(<?php echo $commentaireSignaler->getIdCommentaire(); ?>, <?php echo $commentaireSignaler->getId(); ?>)"> Supprimer </a> - <a href="javascript:void(0)" onclick="annulerSignalement(<?php echo $commentaireSignaler->getIdCommentaire(); ?>)"> Signalement inutile </a> </td>
+                        <td><a href="javascript:void(0)" onclick="deleteCommentaire(<?php echo $commentaireSignaler->getIdCommentaire(); ?>, <?php echo $commentaireSignaler->getId(); ?>)"> Supprimer </a> - <a href="javascript:void(0)" onclick="annulerSignalement(<?php echo $commentaireSignaler->getId(); ?>)"> Signalement inutile </a> </td>
                         <td></td>
                         </tr>
                     <?php endforeach;?>

@@ -94,26 +94,59 @@ class MyRouter
 
                        
             }
+            elseif($page == "connexionPanneauAdmin") {
+
+
+            if(isset($_POST['mdp']))
+            {
+   
+                    $controller = new Controller;
+                    $controller->checkPassAdmin();            
+
+            }
+
+                       
+            }
             elseif($page == "blog-admin") {
                 
-               $controller = new Controller;
-               $controller->afficherPanneauAdmin();
+                $controller = new Controller;     
+                           
+                if(isset($_SESSION['access']))
+                {
+                    $controller->afficherPanneauAdmin();
+                }
+                else
+                {
+                    $controller->connexionAdmin();                    
+                }
+
                        
             }
             elseif($page == "add-article") {
-                
-               $controller = new Controller;
 
-               if(isset($_GET['id_article']) AND is_numeric($_GET['id_article']))
-               {
-                 $id_article = $_GET['id_article'];
-               }
-               else
-               {
-                 $id_article = "none";
-               }
+                $controller = new Controller;     
+                           
+                if(isset($_SESSION['access']))
+                {
 
-               $controller->afficherAddArticle($id_article);
+                   if(isset($_GET['id_article']) AND is_numeric($_GET['id_article']))
+                   {
+                     $id_article = $_GET['id_article'];
+                   }
+                   else
+                   {
+                     $id_article = "none";
+                   }
+
+                   $controller->afficherAddArticle($id_article);
+                }
+                else
+                {
+                    $controller->connexionAdmin();                    
+                }
+
+
+
                        
             }
             elseif($page == "reqAddArticle") {

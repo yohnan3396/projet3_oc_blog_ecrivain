@@ -141,7 +141,7 @@ class commentManager extends Manager
             $db = $this->dbConnect();
      
 
-            $signalerCommentaires = $db->prepare("SELECT s.id_commentaire, s.temps, c.id, c.commentaire, c.pseudo, c.id_article FROM signaler_commentaire s INNER JOIN blog_commentaires c ON s.id_commentaire=c.id ");
+            $signalerCommentaires = $db->prepare("SELECT s.id_commentaire, s.temps, c.id, c.commentaire, c.pseudo, c.id_article, s.id FROM signaler_commentaire s INNER JOIN blog_commentaires c ON s.id_commentaire=c.id ");
             $signalerCommentaires->execute(array());       
             while ($signalerCommentaire = $signalerCommentaires->fetch())
             { 

@@ -3,7 +3,7 @@
 require_once('model/blogManager.php');
 require_once('model/erreurManager.php');
 require_once('model/commentManager.php');
-
+require_once('model/connectAdminManager.php');
 
 class Controller 
 {
@@ -19,6 +19,15 @@ class Controller
 	    }
 	  
 		require('view/backend/add-article.php');
+	}
+
+
+
+
+
+	public function connexionAdmin()
+	{
+		require('view/backend/connect.php');
 	}
 
 
@@ -132,6 +141,16 @@ class Controller
 
         echo json_encode(["msg" => $response]);
 
+	}
+
+
+
+	public function checkPassAdmin()
+	{
+		$connectAdminManager = new \Blog\Index\Model\connectAdminManager();
+		$response = $connectAdminManager->checkMdp();
+
+        echo json_encode(["msg" => $response]);
 	}
 
 

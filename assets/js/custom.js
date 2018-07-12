@@ -70,6 +70,45 @@ $("#submitSignalement").show();
 
 
 
+ $("#form-connexion").submit(function(e){
+        e.preventDefault();
+
+    var mdp = $("#mdp").val();
+
+
+     $.ajax({
+      type: 'POST',
+      url: '/connexionPanneauAdmin',
+      data: {mdp: mdp},
+      dataType: 'json', // JSON
+         
+    beforeSend: function() {
+
+               
+         },  
+     success: function(json) {
+
+      if(json.msg == "yes")
+      {
+        location.reload();
+      }
+      else
+      {
+        alert(json.msg);
+      }
+                                                   
+      }
+                    
+                      
+
+        });
+
+
+    });
+
+
+
+
 
 function submitSignalement()
 {
