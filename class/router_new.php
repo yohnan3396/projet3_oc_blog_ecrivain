@@ -71,7 +71,7 @@ class MyRouter
             elseif($page == "annulerSignalement") {
 
 
-            if(isset($_POST['id']) AND is_numeric($_POST['id']))
+            if(isset($_POST['id_signalement']) AND is_numeric($_POST['id_signalement']))
             {
    
                     $controller = new Controller;

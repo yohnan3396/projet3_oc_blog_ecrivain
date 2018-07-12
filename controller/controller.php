@@ -29,13 +29,14 @@ class Controller
 		$commentManager = new \Blog\Index\Model\commentManager();
 
 		list($articlesTotal) = $blogManager->getArticles("all", "noCateg", "all");
-		list($signalerCommentaireTotal) = $commentManager->getSignalerCommentaire();
+		$signalerCommentaireTotal = $commentManager->getSignalerCommentaire();
 
 		require('view/backend/admin.php');
 	}
 
 
 	// Gestion des erreurs 404, 500 etc..
+
 
 	public function erreur($erreur)
 	{

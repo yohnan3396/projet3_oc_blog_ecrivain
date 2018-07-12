@@ -2,7 +2,16 @@
 
 <?php ob_start(); ?>
 
-
+<style type="text/css">
+    table
+    {
+        text-align: center;
+    }
+    table thead
+    {
+        margin-bottom: 15px;
+    }
+</style>
 
 
 
@@ -19,7 +28,34 @@
     <section id="blog" class="section">
 
         <div class="container-fluid container-custom">
-          
+            <p>
+          <strong>Tableau catégories </strong>
+        <table>
+            <thead>
+                <tr>
+                    <td>Catégorie</td>
+                    <td>Numéro à écrire</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Découverte</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Technologie</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Voyages</td>
+                    <td>3</td>
+                </tr>                
+            </tbody>         
+        </table></p>
+
+
+
+
         <?php if($articlesTotal) { ?>
              <?php foreach($articlesTotal as $article):?>
 
@@ -29,7 +65,7 @@
 
                     <input type="text"  id="titre" name="titre" class="form-control" placeholder="Titre de l'article" value="<?php echo $article->getTitre(); ?>" required>
 
-                    <input type="text"  id="categorie_id" name="categorie_id" class="form-control" value="<?php echo $article->getCategorieID(); ?>" placeholder="Catégorie (voir tableau)" required>
+                    <input type="number"  id="categorie_id" name="categorie_id" class="form-control" value="<?php echo $article->getCategorieID(); ?>" placeholder="Catégorie (voir tableau)" required>
 
                     <input type="text"  id="description_courte" name="description_courte" class="form-control" value="<?php echo $article->getDescriptionCourte(); ?>" placeholder="Description courte " required>
 

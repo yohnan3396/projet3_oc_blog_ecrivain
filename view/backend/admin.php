@@ -37,6 +37,7 @@
 
             <tbody>
 
+
                     <?php  foreach($articlesTotal as $article):?>
                          <tr id="trArticle<?php echo $article->getId(); ?>">
                         <td><?php echo $article->getTitre();?></td>
@@ -51,8 +52,9 @@
 
 
             <h2  style="margin-top: 60px;"> Commentaires signalés </h2>
-            
-            <table style="width:100%;">
+     
+
+         <table style="width:100%;">
 
             <thead>
                 <tr>
@@ -68,19 +70,21 @@
             <tbody>
 
 
-<?php print_r($signalerCommentaireTotal); ?>
+
                     <?php  foreach($signalerCommentaireTotal as $commentaireSignaler):?>
-                         <tr>
+                         <tr id="trCommentaire<?php echo $commentaireSignaler->getId(); ?>">
                         <td><?php echo $commentaireSignaler->getCommentaire();?></td>
                         <td><?php echo $commentaireSignaler->getDate();?></td>
                         <td><?php echo $commentaireSignaler->getIdArticle();?></td>
                         <td><?php echo $commentaireSignaler->getPseudo();?></td>
-                        <td><a href="#" onclick="deleteCommentaire(<?php echo $commentaireSignaler->getIdCommentaire(); ?>, <?php echo $commentaireSignaler->getId(); ?>)"> Supprimer </a> - <a href="#" onclick="annulerSignalement(<?php echo $commentaireSignaler->getIdCommentaire(); ?>)"> Signalement inutile </a> </td>
+                        <td><a href="javascript:void(0)" onclick="deleteCommentaire(<?php echo $commentaireSignaler->getIdCommentaire(); ?>, <?php echo $commentaireSignaler->getId(); ?>)"> Supprimer </a> - <a href="javascript:void(0)" onclick="annulerSignalement(<?php echo $commentaireSignaler->getIdCommentaire(); ?>)"> Signalement inutile </a> </td>
                         <td></td>
                         </tr>
                     <?php endforeach;?>
             </tbody>
             </table>
+
+         
 
 
 
